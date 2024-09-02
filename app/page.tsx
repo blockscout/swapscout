@@ -1,7 +1,13 @@
+'use client';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { Widget } from '@/components/Widget';
+import { WalletProvider } from '@/components/WalletProvider';
+
+const queryClient = new QueryClient();
 
 export default function Page() {
   return (
@@ -11,13 +17,11 @@ export default function Page() {
           <Image src="/logo.svg" alt="Swapscout Logo" width={172} height={30} />
         </div>
         <div className="shadow-custom rounded-[16px] overflow-hidden">
-          {/* <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={queryClient}>
             <WalletProvider>
               <Widget/>
             </WalletProvider>
-          </QueryClientProvider> */}
-          {/* <LiFiWidget integrator="blockscout" config={widgetConfig} /> */}
-          <Widget />
+          </QueryClientProvider>
         </div>
         <div className="mt-8 flex justify-center space-x-8">
           <Link href="https://blockscout.com" className="text-gray-500 hover:text-gray-600">Blockscout</Link>

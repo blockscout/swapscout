@@ -2,9 +2,13 @@
 
 import type { WidgetConfig } from '@lifi/widget';
 import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
+
+import { useWalletContext } from '@/components/WalletProvider';
 import { ClientOnly } from './ClientOnly';
 
 export function Widget() {
+  const { chainId } = useWalletContext();
+
   const config = {
     fee: 0.00075, // 0.075%
     variant: 'compact',
@@ -25,6 +29,8 @@ export function Widget() {
         borderRadiusSecondary: 8,
       },
     },
+    fromChain: chainId || undefined,
+    fromToken: '0x0000000000000000000000000000000000000000',
   } as Partial<WidgetConfig>;
 
   return (
