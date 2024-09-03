@@ -29,7 +29,7 @@ export function Widget() {
         borderRadiusSecondary: 8,
       },
     },
-    fromChain: chainId || undefined,
+    fromChain: chainId || 1,
     fromToken: '0x0000000000000000000000000000000000000000',
   } as Partial<WidgetConfig>;
 
