@@ -6,16 +6,18 @@ import Image from 'next/image';
 
 import { Widget } from '@/components/Widget';
 import { WalletProvider } from '@/components/WalletProvider';
+import { Banner } from '@/components/Banner';
 
 const queryClient = new QueryClient();
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="z-10 items-center justify-between font-mono text-sm">
-        <div className="mb-6 flex justify-center">
+      <div className="flex flex-col z-10 items-center justify-between font-mono text-sm">
+        <div className="mb-8 flex justify-center">
           <Image src="/logo.svg" alt="Swapscout Logo" width={172} height={30} />
         </div>
+        <Banner text={process.env.NEXT_PUBLIC_BANNER_TEXT} />
         <div className="shadow-custom rounded-[16px] overflow-hidden">
           <QueryClientProvider client={queryClient}>
             <WalletProvider>
