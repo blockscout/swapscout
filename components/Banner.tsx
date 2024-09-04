@@ -5,7 +5,7 @@ export const Banner: React.FC<{ text?: string }> = ({ text }) => {
   if (!text) return null;
 
   return (
-    <div className="flex justify-center items-center w-fit h-6 rounded px-2 mb-6 bg-[#c6f6d5] text-[#2d3748]">
+    <div className="flex justify-center items-center text-center w-fit rounded px-2 py-0.5 mb-6 bg-[#c6f6d5] text-[#2d3748]">
       <ReactMarkdown
         components={{
           a: ({ node, ...props }) => (
