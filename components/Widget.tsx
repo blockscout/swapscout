@@ -34,10 +34,8 @@ export function Widget() {
   } as Partial<WidgetConfig>;
 
   return (
-    <main>
-      <ClientOnly fallback={<WidgetSkeleton config={config} />}>
-        <LiFiWidget config={config} integrator="blockscout" />
-      </ClientOnly>
-    </main>
+    <ClientOnly fallback={<WidgetSkeleton config={config} />}>
+      <LiFiWidget config={config} integrator="blockscout" />
+    </ClientOnly>
   );
 }

@@ -18,7 +18,7 @@ export default function Page() {
           <Image src="/logo.svg" alt="Swapscout Logo" width={172} height={30} />
         </div>
         <Banner text={process.env.NEXT_PUBLIC_BANNER_TEXT} />
-        <div className="shadow-custom rounded-[16px] overflow-hidden">
+        <div className="shadow-custom rounded-[16px] overflow-hidden sm:w-[420px]">
           <QueryClientProvider client={queryClient}>
             <WalletProvider>
               <Widget/>
