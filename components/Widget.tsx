@@ -31,6 +31,19 @@ export function Widget() {
     },
     fromChain: chainId || 1,
     fromToken: '0x0000000000000000000000000000000000000000',
+    explorerUrls: {
+      1: ['https://eth.blockscout.com/'],
+      10: ['https://optimism.blockscout.com/'],
+      100: ['https://gnosis.blockscout.com/'],
+      137: ['https://polygon.blockscout.com/'],
+      324: ['https://zksync.blockscout.com/'],
+      1101: ['https://zkevm.blockscout.com/'],
+      8453: ['https://base.blockscout.com/'],
+      42161: ['https://arbitrum.blockscout.com/'],
+    },
+    chains: {
+      allow: [1, 10, 100, 137, 324, 1101, 8453, 42161],
+    }
   } as Partial<WidgetConfig>;
 
   return (
