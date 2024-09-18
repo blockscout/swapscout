@@ -7,11 +7,17 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Swapscout',
-  description: 'Swapscout is a dapp for easy and secure cryptocurrency exchanges.',
+  description: 'Swap between chains fast and easy. Powered by Blockscout',
   icons: [
     { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     { rel: 'apple-touch-icon', url: '/favicon-256x256.png' },
   ],
+  openGraph: {
+    title: 'Swapscout',
+    description: 'Swap between chains fast and easy. Powered by Blockscout',
+    images: [{ url: '/og-image.png', width: 1200, height: 600 }],
+    type: 'website',
+  },
 };
 
 const GoogleAnalytics = () => {
