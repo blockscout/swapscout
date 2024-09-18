@@ -2,22 +2,36 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
+import { headers } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Swapscout',
-  description: 'Swap between chains fast and easy. Powered by Blockscout',
-  icons: [
-    { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    { rel: 'apple-touch-icon', url: '/favicon-256x256.png' },
-  ],
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = headers();
+  const host = headersList.get('host') || 'localhost:3000';
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const baseUrl = `${protocol}://${host}`;
+
+  return {
     title: 'Swapscout',
     description: 'Swap between chains fast and easy. Powered by Blockscout',
-    images: [{ url: '/og-image.png', width: 1200, height: 600 }],
-    type: 'website',
-  },
+    icons: [
+      { rel: 'icon', url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { rel: 'apple-touch-icon', url: '/favicon-256x256.png' },
+    ],
+    openGraph: {
+      title: 'Swapscout',
+      description: 'Swap between chains fast and easy. Powered by Blockscout',
+      images: [
+        {
+          url: `${baseUrl}/og-image.png`,
+          width: 1200,
+          height: 600,
+        },
+      ],
+      type: 'website',
+    },
+  };
 };
 
 const GoogleAnalytics = () => {
