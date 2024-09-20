@@ -26,10 +26,20 @@ export default function Page() {
           </QueryClientProvider>
         </div>
         <div className="mt-8 flex justify-center space-x-8">
-          <Link href="https://blockscout.com" className="text-gray-500 hover:text-gray-600">
+          <Link
+            href="https://blockscout.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-gray-600"
+          >
             Blockscout
           </Link>
-          <Link href="https://docs.blockscout.com/using-blockscout/swapscout" className="text-gray-500 hover:text-gray-600">
+          <Link
+            href="https://docs.blockscout.com/using-blockscout/swapscout"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-gray-600"
+          >
             Documentation
           </Link>
         </div>
