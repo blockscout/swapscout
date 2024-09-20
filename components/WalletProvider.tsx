@@ -20,7 +20,7 @@ const AutoConnectWrapper: FC<PropsWithChildren> = ({ children }) => {
   const { setChainId } = useContext(WalletContext);
 
   useEffect(() => {
-    const connectorInstance = connectors.find((c) => c.id === 'safe' && c.ready);
+    const connectorInstance = connectors.find((c) => c.id === 'safe');
     if (connectorInstance) {
       connect({ connector: connectorInstance });
     }
