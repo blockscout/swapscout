@@ -2,8 +2,8 @@
 
 import type { WidgetConfig } from '@lifi/widget';
 import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
+import { useAppKit, useAppKitNetwork } from '@reown/appkit/react';
 
-import { useWalletContext } from '@/components/WalletProvider';
 import { ClientOnly } from './ClientOnly';
 
 const explorerUrls = {
@@ -27,7 +27,10 @@ const explorerUrls = {
 };
 
 export function Widget() {
-  const { chainId } = useWalletContext();
+  const { open } = useAppKit();
+  const { chainId } = useAppKitNetwork();
+
+  console.log('chainId', chainId);
 
   const config = {
     fee: 0.00075, // 0.075%
@@ -54,7 +57,10 @@ export function Widget() {
     explorerUrls,
     chains: {
       allow: Object.keys(explorerUrls).map(Number),
-    }
+    },
+    walletConfig: {
+      onConnect: open,
+    },
   } as Partial<WidgetConfig>;
 
   return (

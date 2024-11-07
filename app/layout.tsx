@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
+import { headers } from 'next/headers';
+
+import WagmiContextProvider from '@/contexts/WagmiContextProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -44,6 +47,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookies = headers().get('cookie');
+
   return (
     <html lang="en">
       <head>
@@ -51,7 +56,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/favicon-256x256.png" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <WagmiContextProvider cookies={cookies}>
+          {children}
+        </WagmiContextProvider>
+      </body>
     </html>
   );
 }
