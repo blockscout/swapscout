@@ -15,8 +15,8 @@ export function ConnectButton() {
   return (
     <Button dataExist={ Boolean(address) } onClick={ handleClick }>
       { address ? (
-        <div className="flex items-center gap-2">
-          <Jazzicon diameter={ 20 } seed={ jsNumberForAddress(address) } />
+        <div className="flex items-center gap-1.5">
+          <Jazzicon diameter={ 16 } seed={ jsNumberForAddress(address) } />
           <span>
             { address.slice(0, 4) }...{ address.slice(-4) }
           </span>

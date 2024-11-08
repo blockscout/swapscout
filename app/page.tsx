@@ -13,7 +13,20 @@ export default function Page() {
     <main className="flex min-h-screen flex-col items-center justify-center p-10">
       <div className="flex flex-col z-10 items-center justify-between text-sm">
         <div className="w-full mb-6 flex justify-between sm:w-[416px]">
-          <Image src="/logo.svg" alt="Swapscout Logo" width={172} height={30} />
+          <Image
+            className="hidden sm:block"
+            src="/logo-full.svg"
+            alt="Swapscout Logo"
+            width={172}
+            height={30}
+          />
+          <Image
+            className="block sm:hidden"
+            src="/logo.svg"
+            alt="Swapscout Logo"
+            width={30}
+            height={30}
+          />
           <div className="flex gap-2">
             <RewardsButton />
             <ConnectButton />
