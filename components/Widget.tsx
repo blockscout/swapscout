@@ -23,6 +23,7 @@ const explorerUrls = {
   42161: ['https://arbitrum.blockscout.com/'],
   42220: ['https://explorer.celo.org/mainnet/'],
   81457: ['https://blast.blockscout.com/'],
+  534352: ['https://scroll.blockscout.com/'],
   1313161554: ['https://explorer.mainnet.aurora.dev/'],
 };
 
