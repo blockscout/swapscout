@@ -9,7 +9,7 @@ export function Button({ dataExist, onClick, href, children }: Props) {
   const commonClasses = `
     h-[32px] px-3 rounded-lg transition-colors
     text-sm text-[#101112CC] font-semibold
-    data-[selected=true]:px-2.5
+    data-[selected=true]:px-2
     data-[selected=true]:font-bold
     data-[selected=true]:border-0
     data-[selected=true]:bg-[#1011120A]
@@ -23,6 +23,7 @@ export function Button({ dataExist, onClick, href, children }: Props) {
         target="_blank"
         className={`
           ${commonClasses}
+          px-2.5
           data-[selected=false]:hover:text-[#4299E1]
           data-[selected=false]:border-2
           data-[selected=false]:border-[#CBD5E0]
