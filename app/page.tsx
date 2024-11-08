@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-10">
       <div className="flex flex-col z-10 items-center justify-between text-sm">
-        <div className="w-full mb-8 flex justify-between sm:w-[416px]">
+        <div className="w-full mb-6 flex justify-between sm:w-[416px]">
           <Image src="/logo.svg" alt="Swapscout Logo" width={172} height={30} />
           <div className="flex gap-2">
             <RewardsButton />
@@ -28,7 +28,7 @@ export default function Page() {
             href="https://blockscout.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-gray-600"
+            className="text-[#718096] hover:text-gray-500 font-bold"
           >
             Blockscout
           </Link>
@@ -36,7 +36,7 @@ export default function Page() {
             href="https://docs.blockscout.com/using-blockscout/swapscout"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-gray-600"
+            className="text-[#718096] hover:text-gray-500 font-bold"
           >
             Documentation
           </Link>
