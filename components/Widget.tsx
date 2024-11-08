@@ -30,8 +30,6 @@ export function Widget() {
   const { open } = useAppKit();
   const { chainId } = useAppKitNetwork();
 
-  console.log('chainId', chainId);
-
   const config = {
     fee: 0.00075, // 0.075%
     variant: 'compact',

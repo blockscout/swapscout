@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 
 export const Banner: React.FC<{ text?: string }> = ({ text }) => {
   if (!text) return null;
@@ -7,6 +8,7 @@ export const Banner: React.FC<{ text?: string }> = ({ text }) => {
   return (
     <div className="flex justify-center items-center text-center w-fit rounded px-2 py-0.5 mb-6 bg-[#c6f6d5] text-[#2d3748] max-w-[430px]">
       <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
         components={{
           a: ({ node, ...props }) => (
             <a
