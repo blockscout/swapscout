@@ -5,12 +5,13 @@ import Image from 'next/image';
 
 import { Widget } from '@/components/Widget';
 import { BannerText } from '@/components/BannerText';
+import { BannerImage } from '@/components/BannerImage';
 import { ConnectButton } from '@/components/ConnectButton';
 import { RewardsButton } from '@/components/RewardsButton';
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-10">
+    <main className="relative flex min-h-screen flex-col items-center justify-center p-10">
       <div className="flex flex-col z-10 items-center justify-between text-sm">
         <div className="w-full mb-6 flex justify-between sm:w-[416px]">
           <Image
@@ -55,6 +56,7 @@ export default function Page() {
           </Link>
         </div>
       </div>
+      <BannerImage />
     </main>
   );
 }
