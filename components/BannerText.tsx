@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-export const Banner: React.FC<{ text?: string }> = ({ text }) => {
+export const BannerText: React.FC<{ text?: string }> = ({ text }) => {
   if (!text) return null;
 
   return (

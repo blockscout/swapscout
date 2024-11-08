@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Widget } from '@/components/Widget';
-import { Banner } from '@/components/Banner';
+import { BannerText } from '@/components/BannerText';
 import { ConnectButton } from '@/components/ConnectButton';
 import { RewardsButton } from '@/components/RewardsButton';
 
@@ -19,7 +19,7 @@ export default function Page() {
             <ConnectButton />
           </div>
         </div>
-        <Banner text={process.env.NEXT_PUBLIC_BANNER_TEXT} />
+        <BannerText text={process.env.NEXT_PUBLIC_BANNER_TEXT} />
         <div className="shadow-custom rounded-[16px] overflow-hidden sm:w-[416px]">
           <Widget/>
         </div>
