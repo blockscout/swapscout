@@ -1,7 +1,6 @@
 import { cookieStorage, createStorage } from '@wagmi/core';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { safe } from 'wagmi/connectors';
-import { CreateConnectorFn } from 'wagmi';
 
 import { networks } from '@/networks';
 

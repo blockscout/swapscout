@@ -1,0 +1,10 @@
+<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="9.5" cy="2.5" r="1.875" fill="currentColor"/>
+  <circle opacity="0.4" cx="9.5" cy="17.5" r="1.875" fill="currentColor"/>
+  <circle opacity="0.6" cx="2" cy="10" r="1.875" fill="currentColor"/>
+  <circle opacity="0.4" cx="17" cy="10" r="1.875" fill="currentColor"/>
+  <ellipse opacity="0.4" cx="14.8037" cy="4.69629" rx="1.875" ry="1.875" fill="currentColor"/>
+  <ellipse opacity="0.4" cx="4.19629" cy="15.3037" rx="1.875" ry="1.875" fill="currentColor"/>
+  <circle opacity="0.8" cx="4.19629" cy="4.69629" r="1.875" fill="currentColor"/>
+  <circle opacity="0.4" cx="14.8037" cy="15.3037" r="1.875" fill="currentColor"/>
+</svg>
