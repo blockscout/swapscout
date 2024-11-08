@@ -28,11 +28,12 @@ createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks,
-  defaultNetwork: networks[0],
   metadata: metadata,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true,
+    swaps: false,
   },
+  themeMode: 'light',
 });
 
 function ContextProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
