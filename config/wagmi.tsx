@@ -1,6 +1,9 @@
 import { cookieStorage, createStorage } from '@wagmi/core';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-import { mainnet, arbitrum } from '@reown/appkit/networks';
+import { safe } from 'wagmi/connectors';
+import { CreateConnectorFn } from 'wagmi';
+
+import { networks } from '@/networks';
 
 export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
 
@@ -8,7 +11,13 @@ if (!projectId) {
   throw new Error('Project ID is not defined');
 }
 
-export const networks = [mainnet, arbitrum];
+const connectors: any = [];
+connectors.push(
+  safe({
+    allowedDomains: [/^.*$/], // Allow all domains
+    debug: false,
+  })
+);
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -18,6 +27,7 @@ export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   projectId,
   networks,
+  connectors,
 });
 
 export const config = wagmiAdapter.wagmiConfig;

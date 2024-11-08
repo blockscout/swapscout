@@ -1,37 +1,18 @@
 'use client';
 
+import { useMemo } from 'react';
 import type { WidgetConfig } from '@lifi/widget';
 import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
 import { useAppKit, useAppKitNetwork } from '@reown/appkit/react';
 
+import { explorerUrls, networks } from '@/networks';
 import { ClientOnly } from './ClientOnly';
-
-const explorerUrls = {
-  1: ['https://eth.blockscout.com/'],
-  10: ['https://optimism.blockscout.com/'],
-  30: ['https://rootstock.blockscout.com/'],
-  100: ['https://gnosis.blockscout.com/'],
-  122: ['https://explorer.fuse.io/'],
-  137: ['https://polygon.blockscout.com/'],
-  324: ['https://zksync.blockscout.com/'],
-  1088: ['https://andromeda-explorer.metis.io/'],
-  1101: ['https://zkevm.blockscout.com/'],
-  5000: ['https://explorer.mantle.xyz/'],
-  8453: ['https://base.blockscout.com/'],
-  13371: ['https://explorer.immutable.com/'],
-  34443: ['https://explorer.mode.network/'],
-  42161: ['https://arbitrum.blockscout.com/'],
-  42220: ['https://explorer.celo.org/mainnet/'],
-  81457: ['https://blast.blockscout.com/'],
-  534352: ['https://scroll.blockscout.com/'],
-  1313161554: ['https://explorer.mainnet.aurora.dev/'],
-};
 
 export function Widget() {
   const { open } = useAppKit();
   const { chainId } = useAppKitNetwork();
 
-  const config = {
+  const config = useMemo(() => ({
     fee: 0.00075, // 0.075%
     variant: 'compact',
     subvariant: 'default',
@@ -55,12 +36,12 @@ export function Widget() {
     fromToken: '0x0000000000000000000000000000000000000000',
     explorerUrls,
     chains: {
-      allow: Object.keys(explorerUrls).map(Number),
+      allow: networks.map(n => n.id),
     },
     walletConfig: {
       onConnect: open,
     },
-  } as Partial<WidgetConfig>;
+  } as Partial<WidgetConfig>), []);
 
   return (
     <ClientOnly fallback={<WidgetSkeleton config={config} />}>
