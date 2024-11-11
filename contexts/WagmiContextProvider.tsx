@@ -32,6 +32,7 @@ createAppKit({
   features: {
     analytics: true,
     swaps: false,
+    onramp: false,
   },
   themeMode: 'light',
 });
