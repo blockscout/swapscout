@@ -24,6 +24,7 @@ import {
   ink,
   berachain,
   lisk,
+  unichain,
 } from "@reown/appkit/networks";
 
 export const networks = [
@@ -51,6 +52,7 @@ export const networks = [
   ink,
   berachain,
   lisk,
+  unichain,
 ] as [AppKitNetwork, ...AppKitNetwork[]];
 
 export const explorerUrls = {
@@ -78,4 +80,5 @@ export const explorerUrls = {
   [ink.id]: ["https://explorer.inkonchain.com/"],
   [berachain.id]: ["https://bera.blockscout.com/"],
   [lisk.id]: ["https://blockscout.lisk.com/"],
+  [unichain.id]: ["https://unichain.blockscout.com/"],
 };
