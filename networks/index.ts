@@ -21,6 +21,9 @@ import {
   worldchain,
   linea,
   taiko,
+  ink,
+  berachain,
+  lisk,
 } from "@reown/appkit/networks";
 
 export const networks = [
@@ -45,6 +48,9 @@ export const networks = [
   worldchain,
   linea,
   taiko,
+  ink,
+  berachain,
+  lisk,
 ] as [AppKitNetwork, ...AppKitNetwork[]];
 
 export const explorerUrls = {
@@ -69,4 +75,7 @@ export const explorerUrls = {
   [worldchain.id]: ["https://worldchain-mainnet.explorer.alchemy.com/"],
   [linea.id]: ["https://explorer.linea.build/"],
   [taiko.id]: ["https://blockscout.mainnet.taiko.xyz/"],
+  [ink.id]: ["https://explorer.inkonchain.com/"],
+  [berachain.id]: ["https://bera.blockscout.com/"],
+  [lisk.id]: ["https://blockscout.lisk.com/"],
 };
