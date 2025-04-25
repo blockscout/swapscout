@@ -25,6 +25,7 @@ import {
   berachain,
   lisk,
   unichain,
+  soneium,
 } from "@reown/appkit/networks";
 
 export const networks = [
@@ -53,6 +54,7 @@ export const networks = [
   berachain,
   lisk,
   unichain,
+  soneium,
 ] as [AppKitNetwork, ...AppKitNetwork[]];
 
 export const explorerUrls = {
@@ -81,4 +83,5 @@ export const explorerUrls = {
   [berachain.id]: ["https://bera.blockscout.com/"],
   [lisk.id]: ["https://blockscout.lisk.com/"],
   [unichain.id]: ["https://unichain.blockscout.com/"],
+  [soneium.id]: ["https://soneium.blockscout.com/"],
 };
