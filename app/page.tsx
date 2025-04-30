@@ -8,6 +8,7 @@ import { BannerText } from '@/components/BannerText';
 import { BannerImage } from '@/components/BannerImage';
 import { ConnectButton } from '@/components/ConnectButton';
 import { RewardsButton } from '@/components/RewardsButton';
+import { ActivityTracker } from '@/components/ActivityTracker';
 
 export default function Page() {
   return (
@@ -57,6 +58,7 @@ export default function Page() {
         </div>
       </div>
       <BannerImage />
+      <ActivityTracker />
     </main>
   );
 }
