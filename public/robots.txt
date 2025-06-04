@@ -1,0 +1,1 @@
+Sitemap: https://swap.blockscout.com/sitemap.xml
