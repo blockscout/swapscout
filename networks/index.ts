@@ -24,6 +24,10 @@ import {
   lisk,
   unichain,
   soneium,
+  plume,
+  etherlink,
+  swellchain,
+  gravity,
 } from "@reown/appkit/networks";
 
 export const networks = [
@@ -51,6 +55,10 @@ export const networks = [
   lisk,
   unichain,
   soneium,
+  plume,
+  etherlink,
+  swellchain,
+  gravity,
 ] as [AppKitNetwork, ...AppKitNetwork[]];
 
 export const explorerUrls = {
@@ -78,4 +86,8 @@ export const explorerUrls = {
   [lisk.id]: ["https://blockscout.lisk.com/"],
   [unichain.id]: ["https://unichain.blockscout.com/"],
   [soneium.id]: ["https://soneium.blockscout.com/"],
+  [plume.id]: ["https://explorer.plume.org/"],
+  [etherlink.id]: ["https://explorer.etherlink.com/"],
+  [swellchain.id]: ["https://explorer.swellnetwork.io/"],
+  [gravity.id]: ["https://explorer.gravity.xyz/"],
 };
