@@ -1,8 +1,9 @@
 import { cookieStorage, createStorage } from '@wagmi/core';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-import { safe } from 'wagmi/connectors';
+// import { safe } from 'wagmi/connectors';
 
 import { networks } from '@/networks';
+import { safe } from '@/connector';
 
 export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
 
