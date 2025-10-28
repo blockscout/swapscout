@@ -1,5 +1,13 @@
 'use client';
 
+import { Stub } from '@/components/Stub';
+
+export default function Page() {
+  return <Stub />;
+}
+
+/*
+
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -62,3 +70,4 @@ export default function Page() {
     </main>
   );
 }
+*/

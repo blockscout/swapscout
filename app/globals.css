@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 245, 251, 255;
   --background-end-rgb: 190, 221, 243;
@@ -23,7 +23,7 @@ body {
       rgb(var(--background-start-rgb)),
       rgb(var(--background-end-rgb))
     );
-}
+} */
 
 @layer utilities {
   .text-balance {

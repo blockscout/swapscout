@@ -6,7 +6,12 @@ import { headers } from 'next/headers';
 
 import WagmiContextProvider from '@/contexts/WagmiContextProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  fallback: ['InterFallback', 'sans-serif'],
+});
 
 export const metadata: Metadata = {
   title: 'Swapscout',
@@ -56,7 +61,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/favicon-256x256.png" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         <WagmiContextProvider cookies={cookies}>
           {children}
         </WagmiContextProvider>
