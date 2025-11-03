@@ -22,17 +22,19 @@ export function Stub() {
     setMounted(true);
   }, []);
 
-  const targetHost = useMemo(() => {
-    if (!mounted) return defaultHost;
+  const [targetHost, isMatch] = useMemo(() => {
+    if (!mounted) return [defaultHost, false];
     try {
       const ref = document.referrer;
       if (ref) {
         const refHost = new URL(ref).hostname;
         const match = instances.find((host) => refHost === host);
-        return match ?? defaultHost;
+        if (match) {
+          return [match, true];
+        }
       }
     } catch {}
-    return defaultHost;
+    return [defaultHost, false];
   }, [mounted]);
 
   return (
@@ -59,7 +61,7 @@ export function Stub() {
 
         <a
           href={`https://${targetHost}/essential-dapps/swap?utm_source=swapscout&utm_medium=deprecation-banner`}
-          target="_blank"
+          target={isMatch ? '_top' : '_blank'}
           className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#5459D6] px-3 py-2 text-base font-semibold text-white transition-opacity hover:opacity-[0.9]"
         >
           Access Swap dapp
