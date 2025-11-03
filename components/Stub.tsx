@@ -25,6 +25,7 @@ export function Stub() {
 
         <a
           href="https://eth.blockscout.com/essential-dapps/swap?utm_source=swapscout&utm_medium=deprecation-banner"
+          target="_blank"
           className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#5459D6] px-3 py-2 text-base font-semibold text-white transition-opacity hover:opacity-[0.9]"
         >
           Access Swap dapp
