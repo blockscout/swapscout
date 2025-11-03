@@ -1,6 +1,40 @@
 import Image from 'next/image';
+import { useEffect, useMemo, useState } from 'react';
+
+const instances = [
+  'eth.blockscout.com',
+  'base.blockscout.com',
+  'explorer.optimism.io',
+  'arbitrum.blockscout.com',
+  'gnosis.blockscout.com',
+  'soneium.blockscout.com',
+  'unichain.blockscout.com',
+  'explorer.inkonchain.com',
+  'celo.blockscout.com',
+];
+
+const defaultHost = 'eth.blockscout.com';
 
 export function Stub() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const targetHost = useMemo(() => {
+    if (!mounted) return defaultHost;
+    try {
+      const ref = document.referrer;
+      if (ref) {
+        const refHost = new URL(ref).hostname;
+        const match = instances.find((host) => refHost === host);
+        return match ?? defaultHost;
+      }
+    } catch {}
+    return defaultHost;
+  }, [mounted]);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6 py-16">
       <div className="flex w-full max-w-[800px] flex-col items-center text-center">
@@ -24,7 +58,7 @@ export function Stub() {
         </p>
 
         <a
-          href="https://eth.blockscout.com/essential-dapps/swap?utm_source=swapscout&utm_medium=deprecation-banner"
+          href={`https://${targetHost}/essential-dapps/swap?utm_source=swapscout&utm_medium=deprecation-banner`}
           target="_blank"
           className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#5459D6] px-3 py-2 text-base font-semibold text-white transition-opacity hover:opacity-[0.9]"
         >
