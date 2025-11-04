@@ -9,8 +9,15 @@ import { BannerImage } from '@/components/BannerImage';
 import { ConnectButton } from '@/components/ConnectButton';
 import { RewardsButton } from '@/components/RewardsButton';
 import { ActivityTracker } from '@/components/ActivityTracker';
+import { Button } from '@/components/common/Button';
+import { useAppKit, useAppKitNetwork } from '@reown/appkit/react'
+import { rootstock } from 'viem/chains'
 
 export default function Page() {
+  const { chainId } = useAppKitNetwork();
+  const { open } = useAppKit();
+  const openRamp = () => open({ view: 'OnRampProviders'});
+
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-10">
       <div className="flex flex-col z-10 items-center justify-between text-sm">
@@ -33,6 +40,20 @@ export default function Page() {
             <RewardsButton />
             <ConnectButton />
           </div>
+        </div>
+        <div className={`w-full mb-3 flex justify-end sm:w-[416px] ${chainId === rootstock.id ? "" : "hidden"}`}>
+          <Button onClick={openRamp}>
+            <div className="flex items-center gap-1.5">
+              <Image
+                className="block"
+                src="/rif-logo.png"
+                alt="RIf Logo"
+                width={17}
+                height={17}
+              />
+              Buy $RIF with Fiat
+            </div>
+          </Button>
         </div>
         <BannerText text={process.env.NEXT_PUBLIC_BANNER_TEXT} />
         <div className="shadow-custom rounded-[16px] overflow-hidden sm:w-[416px]">

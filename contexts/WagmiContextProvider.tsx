@@ -34,7 +34,7 @@ createAppKit({
     socials: false,
     email: false,
     swaps: false,
-    onramp: false,
+    onramp: true,
   },
   themeMode: "light",
 });
