@@ -1,55 +1,83 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import type { WidgetConfig } from "@lifi/widget";
-import { LiFiWidget, WidgetSkeleton } from "@lifi/widget";
-import { useAppKit, useAppKitNetwork } from "@reown/appkit/react";
+import { useEffect, useMemo, useState } from 'react';
+import type { WidgetConfig } from '@lifi/widget';
+import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
+import { useChainId } from 'wagmi';
 
-import { explorerUrls, networks } from "@/networks";
-import { ClientOnly } from "./ClientOnly";
+import { ClientOnly } from './ClientOnly';
 
 export function Widget() {
-  const { open } = useAppKit();
-  const { chainId } = useAppKitNetwork();
+  const chainId = useChainId();
+
+  const [ configData, setConfigData ] = useState<any>(null);
+
+  useEffect(() => {
+    const sendHeight = () => {
+      window.parent.postMessage(
+        { type: 'window-height', height: document.body.scrollHeight },
+        '*',
+      );
+    };
+    sendHeight();
+
+    const resizeObserver = new ResizeObserver(sendHeight);
+    resizeObserver.observe(document.body);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'config') {
+        setConfigData(event.data);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   const config = useMemo(
     () =>
       ({
-        fee: 0.004, // 0.4% instead of 0.075%
-        variant: "compact",
-        subvariant: "default",
-        appearance: "light",
+        fee: configData?.fee,
+        variant: 'compact',
+        subvariant: 'default',
         theme: {
+          typography: { fontFamily: configData?.fontFamily },
           palette: {
-            primary: { main: "#2B6CB0" },
-            secondary: { main: "#2B6CB0" },
-          },
-          typography: { fontFamily: "Inter, sans-serif" },
-          container: {
-            boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.08)",
-            borderRadius: "16px",
+            primary: { main: configData?.mainColor },
+            secondary: { main: configData?.mainColor },
           },
           shape: {
-            borderRadius: 24,
+            borderRadius: 12,
             borderRadiusSecondary: 8,
           },
+          container: {
+            border: `1px solid ${configData?.borderColor}`,
+            borderRadius: 12,
+          },
         },
-        fromChain: chainId || 1,
-        fromToken: "0x0000000000000000000000000000000000000000",
-        explorerUrls,
+        hiddenUI: [ 'appearance' ],
+        fromChain: configData?.initialChainId,
+        fromToken: '0x0000000000000000000000000000000000000000',
+        explorerUrls: configData?.explorerUrls,
         chains: {
-          allow: networks.map((n) => n.id),
+          allow: configData?.chains,
         },
         walletConfig: {
-          onConnect: open,
+          onConnect: () => {},
         },
       } as Partial<WidgetConfig>),
-    []
+    [configData]
   );
+
+  if (!configData) return null;
 
   return (
     <ClientOnly fallback={<WidgetSkeleton config={config} />}>
-      <LiFiWidget config={config} integrator="blockscout" />
+      <LiFiWidget config={config} integrator={configData?.integrator || 'blockscout'} />
     </ClientOnly>
   );
 }

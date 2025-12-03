@@ -1,21 +1,17 @@
 import SafeAppsSDK, { Methods, SafeInfo } from '@safe-global/safe-apps-sdk';
 import { SafeAppProvider as SafeAppProviderBase } from '@safe-global/safe-apps-provider';
 import { MessageFormatter, InterfaceMessageEvent } from '@safe-global/safe-apps-sdk';
-import { numberToHex } from 'viem';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
 
-// The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
-export class SafeAppProvider extends SafeAppProviderBase {
+export default class SafeAppProvider extends SafeAppProviderBase {
   private callbacks = new Map<string, Callback>();
-  private currentChainId: number;
-  private localSdk: SafeAppsSDK;
+  private sdk_: SafeAppsSDK;
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     super(safe, sdk);
-    this.currentChainId = safe.chainId;
-    this.localSdk = sdk;
+    this.sdk_ = sdk;
     window.addEventListener('message', this.handleIncomingMessage);
   }
 
@@ -30,10 +26,6 @@ export class SafeAppProvider extends SafeAppProviderBase {
       this.callbacks.delete(id);
     }
   };
-
-  public get chainId(): number {
-    return this.currentChainId;
-  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async request(request: { method: string; params?: any[] }): Promise<any> {
@@ -55,10 +47,7 @@ export class SafeAppProvider extends SafeAppProviderBase {
               reject(new Error(response.error));
               return;
             }
-
-            this.currentChainId = response.data.id;
             this.emit('chainChanged', response.data.id);
-
             resolve(response);
           });
         });
@@ -66,7 +55,7 @@ export class SafeAppProvider extends SafeAppProviderBase {
 
       case 'eth_getTransactionByHash': {
         let txHash = params[0];
-        return this.localSdk.eth.getTransactionByHash([txHash]).then((tx) => {
+        return this.sdk_.eth.getTransactionByHash([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.hash = txHash;
@@ -77,17 +66,13 @@ export class SafeAppProvider extends SafeAppProviderBase {
 
       case 'eth_getTransactionReceipt': {
         let txHash = params[0];
-        return this.localSdk.eth.getTransactionReceipt([txHash]).then((tx) => {
+        return this.sdk_.eth.getTransactionReceipt([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.transactionHash = txHash;
           }
           return tx;
         });
-      }
-
-      case 'eth_chainId': {
-        return numberToHex(this.currentChainId);
       }
 
       default:

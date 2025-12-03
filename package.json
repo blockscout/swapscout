@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lifi/sdk": "^3.4.1",
-    "@lifi/widget": "^3.12.0",
+    "@bigmi/react": "^0.6.3",
+    "@lifi/sdk": "^3.13.6",
+    "@lifi/widget": "^3.36.0",
+    "@mysten/dapp-kit": "^0.19.11",
     "@reown/appkit": "^1.7.0",
     "@reown/appkit-adapter-wagmi": "^1.7.0",
+    "@solana/wallet-adapter-react": "^0.15.39",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.59.20",
     "@wagmi/core": "^2.22.1",
