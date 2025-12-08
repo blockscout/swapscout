@@ -3,13 +3,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { WidgetConfig } from '@lifi/widget';
 import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
-import { useChainId } from 'wagmi';
 
 import { ClientOnly } from './ClientOnly';
 
 export function Widget() {
-  const chainId = useChainId();
-
   const [ configData, setConfigData ] = useState<any>(null);
 
   useEffect(() => {
@@ -60,7 +57,7 @@ export function Widget() {
           },
         },
         hiddenUI: [ 'appearance' ],
-        fromChain: configData?.initialChainId,
+        fromChain: configData?.defaultChainId,
         fromToken: '0x0000000000000000000000000000000000000000',
         explorerUrls: configData?.explorerUrls,
         chains: {
