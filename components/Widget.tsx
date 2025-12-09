@@ -52,11 +52,12 @@ export function Widget() {
             borderRadiusSecondary: 8,
           },
           container: {
+            height: 'fit-content',
             border: `1px solid ${configData?.borderColor}`,
             borderRadius: 12,
           },
         },
-        hiddenUI: [ 'appearance' ],
+        hiddenUI: [ 'appearance', 'language', 'gasRefuelMessage' ],
         fromChain: configData?.defaultChainId,
         fromToken: '0x0000000000000000000000000000000000000000',
         explorerUrls: configData?.explorerUrls,
