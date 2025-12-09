@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import type { WidgetConfig } from '@lifi/widget';
 import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
 
@@ -35,6 +35,10 @@ export function Widget() {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
+  const onWalletConnect = useCallback(() => {
+    window.parent.postMessage({ type: 'connect-wallet' }, '*');
+  }, []);
+
   const config = useMemo(
     () =>
       ({
@@ -65,10 +69,10 @@ export function Widget() {
           allow: configData?.chains,
         },
         walletConfig: {
-          onConnect: () => {},
+          onConnect: onWalletConnect,
         },
       } as Partial<WidgetConfig>),
-    [configData]
+    [configData, onWalletConnect]
   );
 
   if (!configData) return null;
