@@ -6,7 +6,7 @@ import {
   ProviderNotFoundError,
   ChainNotConfiguredError,
 } from '@wagmi/core';
-import { getAddress, SwitchChainError, withTimeout } from 'viem';
+import { getAddress, SwitchChainError, withTimeout, numberToHex } from 'viem';
 import type { SafeParameters } from 'wagmi/connectors';
 
 import SafeAppProvider from './provider';
@@ -129,7 +129,11 @@ export function safe(parameters: SafeParameters = {}) {
       const chain = config.chains.find((x) => x.id === chainId);
       if (!chain) throw new SwitchChainError(new ChainNotConfiguredError());
 
-      await provider.request({ method: 'wallet_switchEthereumChain', params: { chainId } });
+      await provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: numberToHex(chainId) }],
+      });
+
       return chain;
     },
 

@@ -1,6 +1,7 @@
 import SafeAppsSDK, { Methods, SafeInfo } from '@safe-global/safe-apps-sdk';
 import { SafeAppProvider as SafeAppProviderBase } from '@safe-global/safe-apps-provider';
 import { MessageFormatter, InterfaceMessageEvent } from '@safe-global/safe-apps-sdk';
+import { hexToNumber, numberToHex } from 'viem';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
@@ -33,7 +34,7 @@ export default class SafeAppProvider extends SafeAppProviderBase {
 
     switch (method) {
       case 'wallet_switchEthereumChain': {
-        const request = MessageFormatter.makeRequest('wallet_switchEthereumChain' as Methods, params);
+        const request = MessageFormatter.makeRequest('wallet_switchEthereumChain' as Methods, params[0]);
 
         if (typeof window === 'undefined') {
           throw new Error("Window doesn't exist");
@@ -72,6 +73,17 @@ export default class SafeAppProvider extends SafeAppProviderBase {
             tx.transactionHash = txHash;
           }
           return tx;
+        });
+      }
+
+      // When the user retries the transaction, the LiFi widget sends the incorrect chainId (the original one),
+      // even though the chainId has been updated in the provider.
+      //
+      // TODO: investigate further why this is happening.
+      case 'wallet_sendCalls': {
+        return super.request({
+          ...request,
+          params: [{ ...params[0], chainId: numberToHex(this.chainId) }],
         });
       }
 
