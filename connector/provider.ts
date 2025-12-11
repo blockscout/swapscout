@@ -81,10 +81,8 @@ export default class SafeAppProvider extends SafeAppProviderBase {
       //
       // TODO: investigate further why this is happening.
       case 'wallet_sendCalls': {
-        return super.request({
-          ...request,
-          params: [{ ...params[0], chainId: numberToHex(this.chainId) }],
-        });
+        console.log('WALLET_SENDCALLS', params);
+        return super.request(request);
       }
 
       default:
