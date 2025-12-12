@@ -1,7 +1,7 @@
 import SafeAppsSDK, { Methods, SafeInfo } from '@safe-global/safe-apps-sdk';
 import { SafeAppProvider as SafeAppProviderBase } from '@safe-global/safe-apps-provider';
 import { MessageFormatter, InterfaceMessageEvent } from '@safe-global/safe-apps-sdk';
-import { hexToNumber, numberToHex } from 'viem';
+import { numberToHex } from 'viem';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
@@ -48,7 +48,7 @@ export default class SafeAppProvider extends SafeAppProviderBase {
               reject(new Error(response.error));
               return;
             }
-            this.emit('chainChanged', response.data.id);
+            this.emit('chainChanged', response.data.chainId);
             resolve(response);
           });
         });

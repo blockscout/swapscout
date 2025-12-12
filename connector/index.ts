@@ -20,7 +20,6 @@ export function safe(parameters: SafeParameters = {}) {
   type Properties = Record<string, unknown>;
   type StorageItem = { 'safe.disconnected': true };
 
-  let chainChanged: Connector['onChainChanged'] | undefined;
   let disconnect: Connector['onDisconnect'] | undefined;
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
@@ -34,11 +33,6 @@ export function safe(parameters: SafeParameters = {}) {
 
       const accounts = await this.getAccounts();
       const chainId = await this.getChainId();
-
-      if (!chainChanged) {
-        chainChanged = this.onChainChanged.bind(this);
-        provider.on('chainChanged', chainChanged);
-      }
 
       if (!disconnect) {
         disconnect = this.onDisconnect.bind(this);
@@ -62,10 +56,6 @@ export function safe(parameters: SafeParameters = {}) {
       if (!provider) throw new ProviderNotFoundError();
 
       // Manage EIP-1193 event listeners
-      if (chainChanged) {
-        provider.removeListener('chainChanged', chainChanged);
-        chainChanged = undefined;
-      }
       if (disconnect) {
         provider.removeListener('disconnect', disconnect);
         disconnect = undefined;
@@ -134,6 +124,8 @@ export function safe(parameters: SafeParameters = {}) {
         params: [{ chainId: numberToHex(chainId) }],
       });
 
+      config.emitter.emit('change', { chainId });
+
       return chain;
     },
 
@@ -141,9 +133,8 @@ export function safe(parameters: SafeParameters = {}) {
       // Not relevant for Safe because changing account requires app reload.
     },
 
-    onChainChanged(chain) {
-      const chainId = Number(chain);
-      config.emitter.emit('change', { chainId });
+    onChainChanged() {
+      // The event is emitted in the switchChain function
     },
 
     onDisconnect() {
