@@ -81,14 +81,20 @@ export function safe(parameters: SafeParameters = {}) {
 
       const sdk = new SafeAppsSDK(parameters);
 
-      // `getInfo` hangs when not used in Safe App iFrame
-      // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
-      const safe = await withTimeout(() => sdk.safe.getInfo(), {
-        timeout: parameters.unstable_getInfoTimeout ?? 5000,
-      });
-      if (!safe) throw new Error('Could not load Safe information');
+      try {
+        // `getInfo` hangs when not used in Safe App iFrame
+        // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
+        const safe = await withTimeout(() => sdk.safe.getInfo(), {
+          timeout: parameters.unstable_getInfoTimeout ?? 5000,
+        });
+        console.log('[SafeConnector] getInfo result:', safe);
+        if (!safe) throw new Error('Could not load Safe information');
 
-      return new SafeAppProvider(safe, sdk);
+        return new SafeAppProvider(safe, sdk);
+      } catch (error) {
+        console.error('[SafeConnector] getInfo error:', error);
+        throw error;
+      }
     },
 
     async getChainId() {
