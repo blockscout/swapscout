@@ -1,32 +1,21 @@
-import { cookieStorage, createStorage } from '@wagmi/core';
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-import { safe } from 'wagmi/connectors';
+import { createConfig, http } from '@wagmi/core';
+import { createClient } from 'viem';
 
-import { networks } from '@/networks';
+import { safe } from '@/connector';
+import chains from '@/chains';
 
-export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID;
-
-if (!projectId) {
-  throw new Error('Project ID is not defined');
-}
-
-const connectors: any = [];
-connectors.push(
-  safe({
-    allowedDomains: [/^.*$/], // Allow all domains
-    debug: false,
-  })
-);
-
-//Set up the Wagmi Adapter (Config)
-export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({
-    storage: cookieStorage
-  }),
+const config = createConfig({
+  chains,
+  connectors: [
+    safe({
+      allowedDomains: [/^.*$/], // Allow all domains
+      debug: false,
+    })
+  ],
   ssr: true,
-  projectId,
-  networks,
-  connectors,
+  client({ chain }) {
+    return createClient({ chain, transport: http() })
+  },
 });
 
-export const config = wagmiAdapter.wagmiConfig;
+export default config;

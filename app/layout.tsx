@@ -1,12 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
 import Script from 'next/script';
-import { headers } from 'next/headers';
 
 import WagmiContextProvider from '@/contexts/WagmiContextProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Swapscout',
@@ -47,17 +44,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookies = headers().get('cookie');
-
   return (
     <html lang="en">
       <head>
         <GoogleAnalytics />
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/favicon-256x256.png" />
+        <meta name="color-scheme" content="light dark" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={inter.className}>
-        <WagmiContextProvider cookies={cookies}>
+      <body>
+        <WagmiContextProvider>
           {children}
         </WagmiContextProvider>
       </body>
