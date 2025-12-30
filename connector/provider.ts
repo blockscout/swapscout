@@ -9,11 +9,21 @@ type Callback = (response: any) => void;
 export default class SafeAppProvider extends SafeAppProviderBase {
   private callbacks = new Map<string, Callback>();
   private sdk_: SafeAppsSDK;
+  private chainId_: number;
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     super(safe, sdk);
     this.sdk_ = sdk;
+    this.chainId_ = safe.chainId;
     window.addEventListener('message', this.handleIncomingMessage);
+  }
+
+  public override get chainId(): number {
+    return this.chainId_;
+  }
+
+  public updateChainId(chainId: number): void {
+    this.chainId_ = chainId;
   }
 
   private handleIncomingMessage = (msg: InterfaceMessageEvent): void => {

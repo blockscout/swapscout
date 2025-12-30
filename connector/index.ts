@@ -20,6 +20,10 @@ export function safe(parameters: SafeParameters = {}) {
   type Properties = Record<string, unknown>;
   type StorageItem = { 'safe.disconnected': true };
 
+  let provider_: SafeAppProvider | undefined;
+  let sdk_: SafeAppsSDK | undefined;
+
+  let chainChanged: Connector['onChainChanged'] | undefined;
   let disconnect: Connector['onDisconnect'] | undefined;
 
   return createConnector<Provider, Properties, StorageItem>((config) => ({
@@ -34,6 +38,10 @@ export function safe(parameters: SafeParameters = {}) {
       const accounts = await this.getAccounts();
       const chainId = await this.getChainId();
 
+      if (!chainChanged) {
+        chainChanged = this.onChainChanged.bind(this);
+        provider.on('chainChanged', chainChanged);
+      }
       if (!disconnect) {
         disconnect = this.onDisconnect.bind(this);
         provider.on('disconnect', disconnect);
@@ -56,6 +64,10 @@ export function safe(parameters: SafeParameters = {}) {
       if (!provider) throw new ProviderNotFoundError();
 
       // Manage EIP-1193 event listeners
+      if (chainChanged) {
+        provider.removeListener('chainChanged', chainChanged);
+        chainChanged = undefined;
+      }
       if (disconnect) {
         provider.removeListener('disconnect', disconnect);
         disconnect = undefined;
@@ -79,22 +91,24 @@ export function safe(parameters: SafeParameters = {}) {
       const isIframe = typeof window !== 'undefined' && window?.parent !== window;
       if (!isIframe) return;
 
-      const sdk = new SafeAppsSDK(parameters);
-
-      try {
-        // `getInfo` hangs when not used in Safe App iFrame
-        // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
-        const safe = await withTimeout(() => sdk.safe.getInfo(), {
-          timeout: parameters.unstable_getInfoTimeout ?? 5000,
-        });
-        console.log('[SafeConnector] getInfo result:', safe);
-        if (!safe) throw new Error('Could not load Safe information');
-
-        return new SafeAppProvider(safe, sdk);
-      } catch (error) {
-        console.error('[SafeConnector] getInfo error:', error);
-        throw error;
+      if (!sdk_) {
+        sdk_ = new SafeAppsSDK(parameters);
       }
+
+      // `getInfo` hangs when not used in Safe App iFrame
+      // https://github.com/safe-global/safe-apps-sdk/issues/263#issuecomment-1029835840
+      const safe = await withTimeout(() => sdk_!.safe.getInfo(), {
+        timeout: parameters.unstable_getInfoTimeout ?? 5000,
+      });
+      if (!safe) throw new Error('Could not load Safe information');
+
+      if (!provider_) {
+        provider_ = new SafeAppProvider(safe, sdk_!);
+      } else {
+        provider_.updateChainId(safe.chainId);
+      }
+
+      return provider_;
     },
 
     async getChainId() {
@@ -130,8 +144,6 @@ export function safe(parameters: SafeParameters = {}) {
         params: [{ chainId: numberToHex(chainId) }],
       });
 
-      config.emitter.emit('change', { chainId });
-
       return chain;
     },
 
@@ -139,8 +151,9 @@ export function safe(parameters: SafeParameters = {}) {
       // Not relevant for Safe because changing account requires app reload.
     },
 
-    onChainChanged() {
-      // The event is emitted in the switchChain function
+    onChainChanged(chain) {
+      const chainId = Number(chain);
+      config.emitter.emit('change', { chainId });
     },
 
     onDisconnect() {
