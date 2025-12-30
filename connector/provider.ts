@@ -76,17 +76,6 @@ export default class SafeAppProvider extends SafeAppProviderBase {
         });
       }
 
-      // When the user retries the transaction, the LiFi widget sends the incorrect chainId (the original one),
-      // even though the chainId has been updated in the provider.
-      //
-      // TODO: investigate further why this is happening.
-      case 'wallet_sendCalls': {
-        return super.request({
-          ...request,
-          params: [{ ...params[0], chainId: numberToHex(this.chainId) }],
-        });
-      }
-
       default:
         return super.request(request);
     }
