@@ -23,6 +23,7 @@ import {
   swellchain,
   etherlink,
   linea,
+  megaeth,
 } from '@wagmi/core/chains';
 
 const chains = [
@@ -49,6 +50,7 @@ const chains = [
   swellchain,
   etherlink,
   linea,
+  megaeth,
 ] as [Chain, ...Chain[]];
 
 export default chains;
