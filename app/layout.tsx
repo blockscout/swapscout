@@ -23,6 +23,19 @@ export const metadata: Metadata = {
 const GoogleAnalytics = () => {
   return (
     <>
+      <Script id="swapscout-config-buffer" strategy="beforeInteractive">
+        {`
+          (function () {
+            var w = window;
+            w.__WIDGET_CONFIG = w.__WIDGET_CONFIG || null;
+            w.addEventListener('message', function (event) {
+              if (event && event.data && event.data.type === 'config') {
+                w.__WIDGET_CONFIG = event.data;
+              }
+            });
+          })();
+        `}
+      </Script>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         strategy="afterInteractive"

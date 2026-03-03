@@ -6,8 +6,16 @@ import { LiFiWidget, WidgetSkeleton } from '@lifi/widget';
 
 import { ClientOnly } from './ClientOnly';
 
+declare global {
+  interface Window {
+    __WIDGET_CONFIG?: any;
+  }
+}
+
 export function Widget() {
-  const [ configData, setConfigData ] = useState<any>(null);
+  const [ configData, setConfigData ] = useState<any>(() =>
+    typeof window !== 'undefined' ? window.__WIDGET_CONFIG ?? null : null
+  );
 
   useEffect(() => {
     const sendHeight = () => {
@@ -25,14 +33,28 @@ export function Widget() {
   }, []);
 
   useEffect(() => {
+    const applyConfig = (nextConfig: any) => {
+      if (!nextConfig) return;
+      window.__WIDGET_CONFIG = nextConfig;
+      setConfigData(nextConfig);
+    };
+
     const handleMessage = (event: MessageEvent) => {
+      if (event.source !== window.parent) return;
       if (event.data?.type === 'config') {
-        setConfigData(event.data);
+        applyConfig(event.data);
       }
     };
 
+    if (window.__WIDGET_CONFIG) {
+      applyConfig(window.__WIDGET_CONFIG);
+    }
+
     window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
 
   const onWalletConnect = useCallback(() => {
