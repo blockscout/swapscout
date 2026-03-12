@@ -104,6 +104,8 @@ export function Widget() {
 
   if (!configData) return null;
 
+  console.log('WIDGET CONFIG', config);
+
   return (
     <ClientOnly fallback={<WidgetSkeleton config={config} />}>
       <LiFiWidget config={config} integrator={configData?.integrator || 'blockscout'} />
