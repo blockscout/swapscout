@@ -93,7 +93,12 @@ export function Widget() {
         walletConfig: {
           onConnect: onWalletConnect,
         },
-      } as Partial<WidgetConfig>),
+        sdkConfig: {
+          executionOptions: {
+            disableMessageSigning: true,
+          },
+        }
+      } as WidgetConfig),
     [configData, onWalletConnect]
   );
 
