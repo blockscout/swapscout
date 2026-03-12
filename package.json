@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@bigmi/react": "^0.6.3",
-    "@lifi/sdk": "^3.15.4",
-    "@lifi/widget": "^3.40.5",
+    "@lifi/sdk": "^3.16.1",
+    "@lifi/widget": "^3.40.12",
     "@mysten/dapp-kit": "^0.19.11",
     "@reown/appkit": "^1.7.0",
     "@reown/appkit-adapter-wagmi": "^1.7.0",
